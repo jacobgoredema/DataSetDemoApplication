@@ -84,5 +84,35 @@ namespace DataSetDemoApplication
         {
             daEmp.Update(dtEmp);
         }
+
+        private void btnInsert_Click(object sender, EventArgs e)
+        {
+            DataRow dataRow = dtEmp.NewRow();
+            //dataRow.RowState.
+            dataRow["EmpName"] = txtName.Text;
+            dataRow["Salary"] = txtName.Text;
+            dtEmp.Rows.Add(dataRow);
+            dgvEmployees.Refresh();
+            daEmp.Update(dtEmp);
+        }
+
+        private void btnUpdateEmp_Click(object sender, EventArgs e)
+        {
+            DataRow drSelected;
+            drSelected = dtEmp.Rows[cboEmpId.SelectedIndex];
+            drSelected["EmpName"] = txtName.Text;
+            drSelected["Salary"] = txtSalary.Text;
+            daEmp.Update(dtEmp);
+            dgvEmployees.Refresh();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            DataRow drSelected;
+            drSelected = dtEmp.Rows[cboEmpId.SelectedIndex];
+            drSelected.Delete();
+            daEmp.Update(dtEmp);
+            dgvEmployees.Refresh();
+        }
     }
 }
