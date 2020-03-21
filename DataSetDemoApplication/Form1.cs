@@ -27,6 +27,10 @@ namespace DataSetDemoApplication
         {
             dataSet = new DataSet();
             daEmp = new SqlDataAdapter("SELECT EmpId,EmpName,Salary FROM Employee", DatabaseHelper.ConnectionString);
+
+            //fetch id from the database once inserted
+            daEmp.RowUpdated += DaEmp_RowUpdated;
+            daEmp.RowUpdating += DaEmp_RowUpdating;
             daEmp.Fill(dataSet, "Employee");
             dtEmp = dataSet.Tables["Employee"];
             dgvEmployees.DataSource = dtEmp;
@@ -41,21 +45,27 @@ namespace DataSetDemoApplication
             SqlConnection connection = new SqlConnection(DatabaseHelper.ConnectionString);
 
             //Insert
+            //cmdInsert = new SqlCommand("Insert into Employee(Empname,Salary)VALUES(@name,@salary); SELECT @Id=@@Identity", connection);
             cmdInsert = new SqlCommand("Insert into Employee(Empname,Salary)VALUES(@name,@salary)", connection);
+        
             SqlParameter ParameterName = cmdInsert.Parameters.Add("@name", SqlDbType.VarChar, 50);
             SqlParameter parameterSalary = cmdInsert.Parameters.Add("@salary", SqlDbType.Money);
+            //SqlParameter parameterId = cmdInsert.Parameters.Add("@Id", SqlDbType.Int);
             ParameterName.SourceColumn = "EmpName";
             parameterSalary.SourceColumn = "Salary";
+            //parameterId.SourceColumn = "EmpId";
+            //parameterId.SourceVersion = DataRowVersion.Current;
+            //parameterId.Direction = ParameterDirection.Output;
 
             //Update
             cmdUpdate = new SqlCommand("UPDATE Employee SET EmpName=@name,Salary=@salary where EmpId=@id", connection);
             SqlParameter updateName = cmdUpdate.Parameters.Add("@name", SqlDbType.VarChar, 50);
             SqlParameter updateSalary = cmdUpdate.Parameters.Add("@salary", SqlDbType.Money);
-            SqlParameter parameterId = cmdUpdate.Parameters.Add("@Id", SqlDbType.Int);
+            SqlParameter parameterIds = cmdUpdate.Parameters.Add("@Id", SqlDbType.Int);
             updateName.SourceColumn = "empName";
             updateSalary.SourceColumn = "Salary";
-            parameterId.SourceColumn = "EmpId";
-            parameterId.SourceVersion = DataRowVersion.Original;
+            parameterIds.SourceColumn = "EmpId";
+            parameterIds.SourceVersion = DataRowVersion.Original;
 
             //Delete
             cmdDelete = new SqlCommand("DELETE FROM Employee WHERE EmpId=@Id", connection);
@@ -66,6 +76,32 @@ namespace DataSetDemoApplication
             daEmp.InsertCommand = cmdInsert;
             daEmp.UpdateCommand = cmdUpdate;
             daEmp.DeleteCommand = cmdDelete;
+        }
+
+        private void DaEmp_RowUpdating(object sender, SqlRowUpdatingEventArgs e)
+        {
+            // validate if new salary is greater than 1000
+            if(e.StatementType==StatementType.Update)
+            {
+                decimal newSalary = Convert.ToDecimal(e.Row["Salary", DataRowVersion.Current]);
+                decimal oldSalary = Convert.ToDecimal(e.Row["Salary", DataRowVersion.Original]);
+                if (newSalary-oldSalary>1000)
+                {
+                    e.Status = UpdateStatus.SkipCurrentRow;
+                    MessageBox.Show("Validation failed...");
+                    e.Row.RejectChanges();
+                }
+            }
+        }
+
+        private void DaEmp_RowUpdated(object sender, SqlRowUpdatedEventArgs e)
+        {
+            if(e.StatementType==StatementType.Insert)
+            {
+                SqlCommand command = new SqlCommand("SELECT @@Identity", e.Command.Connection);
+                e.Row["EmpId"]=command.ExecuteScalar();
+                cboEmpId.Items.Add(e.Row["EmpId"]);
+            }
         }
 
         private void cboEmpId_SelectedIndexChanged(object sender, EventArgs e)
@@ -90,9 +126,8 @@ namespace DataSetDemoApplication
             DataRow dataRow = dtEmp.NewRow();
             //dataRow.RowState.
             dataRow["EmpName"] = txtName.Text;
-            dataRow["Salary"] = txtName.Text;
+            dataRow["Salary"] = txtSalary.Text;
             dtEmp.Rows.Add(dataRow);
-            dgvEmployees.Refresh();
             daEmp.Update(dtEmp);
         }
 
@@ -103,7 +138,6 @@ namespace DataSetDemoApplication
             drSelected["EmpName"] = txtName.Text;
             drSelected["Salary"] = txtSalary.Text;
             daEmp.Update(dtEmp);
-            dgvEmployees.Refresh();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -112,7 +146,6 @@ namespace DataSetDemoApplication
             drSelected = dtEmp.Rows[cboEmpId.SelectedIndex];
             drSelected.Delete();
             daEmp.Update(dtEmp);
-            dgvEmployees.Refresh();
         }
     }
 }
