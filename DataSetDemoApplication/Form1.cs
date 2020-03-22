@@ -147,5 +147,17 @@ namespace DataSetDemoApplication
             drSelected.Delete();
             daEmp.Update(dtEmp);
         }
+
+        private void rdoName_CheckedChanged(object sender, EventArgs e)
+        {
+            DataView dv;
+            dv = dtEmp.DefaultView;
+            if(rdoName.Checked)
+                dv.Sort = "EmpName";
+            else
+                dv.Sort ="Salary";
+
+            
+        }
     }
 }

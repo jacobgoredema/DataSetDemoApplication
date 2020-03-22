@@ -36,7 +36,11 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnUpdateEmp = new System.Windows.Forms.Button();
             this.btnInsert = new System.Windows.Forms.Button();
+            this.grbSort = new System.Windows.Forms.GroupBox();
+            this.rdoName = new System.Windows.Forms.RadioButton();
+            this.rdoSalary = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployees)).BeginInit();
+            this.grbSort.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvEmployees
@@ -45,9 +49,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvEmployees.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvEmployees.Location = new System.Drawing.Point(0, 71);
+            this.dgvEmployees.Location = new System.Drawing.Point(12, 71);
             this.dgvEmployees.Name = "dgvEmployees";
-            this.dgvEmployees.Size = new System.Drawing.Size(796, 338);
+            this.dgvEmployees.Size = new System.Drawing.Size(776, 338);
             this.dgvEmployees.TabIndex = 0;
             // 
             // cboEmpId
@@ -75,7 +79,7 @@
             // 
             // btnUpdate
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(721, 420);
+            this.btnUpdate.Location = new System.Drawing.Point(713, 418);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(75, 23);
             this.btnUpdate.TabIndex = 4;
@@ -113,11 +117,47 @@
             this.btnInsert.UseVisualStyleBackColor = true;
             this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
             // 
+            // grbSort
+            // 
+            this.grbSort.Controls.Add(this.rdoSalary);
+            this.grbSort.Controls.Add(this.rdoName);
+            this.grbSort.Location = new System.Drawing.Point(522, 12);
+            this.grbSort.Name = "grbSort";
+            this.grbSort.Size = new System.Drawing.Size(266, 42);
+            this.grbSort.TabIndex = 8;
+            this.grbSort.TabStop = false;
+            this.grbSort.Text = "Sort";
+            // 
+            // rdoName
+            // 
+            this.rdoName.AutoSize = true;
+            this.rdoName.Location = new System.Drawing.Point(63, 16);
+            this.rdoName.Name = "rdoName";
+            this.rdoName.Size = new System.Drawing.Size(53, 17);
+            this.rdoName.TabIndex = 0;
+            this.rdoName.TabStop = true;
+            this.rdoName.Text = "Name";
+            this.rdoName.UseVisualStyleBackColor = true;
+            this.rdoName.CheckedChanged += new System.EventHandler(this.rdoName_CheckedChanged);
+            // 
+            // rdoSalary
+            // 
+            this.rdoSalary.AutoSize = true;
+            this.rdoSalary.Location = new System.Drawing.Point(172, 16);
+            this.rdoSalary.Name = "rdoSalary";
+            this.rdoSalary.Size = new System.Drawing.Size(54, 17);
+            this.rdoSalary.TabIndex = 1;
+            this.rdoSalary.TabStop = true;
+            this.rdoSalary.Text = "Salary";
+            this.rdoSalary.UseVisualStyleBackColor = true;
+            this.rdoSalary.CheckedChanged += new System.EventHandler(this.rdoName_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.grbSort);
             this.Controls.Add(this.btnInsert);
             this.Controls.Add(this.btnUpdateEmp);
             this.Controls.Add(this.btnDelete);
@@ -131,6 +171,8 @@
             this.Text = "Employee Form";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployees)).EndInit();
+            this.grbSort.ResumeLayout(false);
+            this.grbSort.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -146,6 +188,9 @@
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnUpdateEmp;
         private System.Windows.Forms.Button btnInsert;
+        private System.Windows.Forms.GroupBox grbSort;
+        private System.Windows.Forms.RadioButton rdoSalary;
+        private System.Windows.Forms.RadioButton rdoName;
     }
 }
 
