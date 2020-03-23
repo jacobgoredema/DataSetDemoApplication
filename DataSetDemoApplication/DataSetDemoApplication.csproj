@@ -48,6 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataClasses\DatabaseHelper.cs" />
+    <Compile Include="DynamicDataSetForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DynamicDataSetForm.Designer.cs">
+      <DependentUpon>DynamicDataSetForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -56,6 +62,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DynamicDataSetForm.resx">
+      <DependentUpon>DynamicDataSetForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
