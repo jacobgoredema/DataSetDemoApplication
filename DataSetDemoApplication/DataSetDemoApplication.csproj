@@ -60,8 +60,22 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="OrganisationDataSet.cs">
+      <DependentUpon>OrganisationDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="OrganisationDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OrganisationDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypedDataSetForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TypedDataSetForm.Designer.cs">
+      <DependentUpon>TypedDataSetForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="DynamicDataSetForm.resx">
       <DependentUpon>DynamicDataSetForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -77,6 +91,20 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="TypedDataSetForm.resx">
+      <DependentUpon>TypedDataSetForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="OrganisationDataSet.xsc">
+      <DependentUpon>OrganisationDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="OrganisationDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>OrganisationDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="OrganisationDataSet.xss">
+      <DependentUpon>OrganisationDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
